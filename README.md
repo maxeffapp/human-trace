@@ -276,3 +276,9 @@ If the answer is yes, the technical system behind it can be deepened later.
 The MVP should **not** start with a knowledge graph. It is better to test the `normal AI answer + Human Trace` experience on 20–30 hand-picked examples first. If people genuinely open the story and remember it, investing in retrieval, verification and graph infrastructure becomes meaningful.
 
 Confidence level: **high** for the product concept; **medium** for the quality of automated historical attribution — which is exactly why a verification layer must be mandatory.
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE).
