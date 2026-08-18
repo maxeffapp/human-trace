@@ -251,6 +251,8 @@ If the prototype succeeds, build persistent memory structured as `Person · Even
 **Phase 6 — Personalization**
 The system tunes Human Trace density to the user's interest. Some users want more human stories; others want them only in genuinely special cases.
 
+For the detailed, task-level execution plan see [`ROADMAP.md`](ROADMAP.md).
+
 ---
 
 ## 9. The AI System Prompt
