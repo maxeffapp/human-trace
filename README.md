@@ -1,206 +1,198 @@
-# İnsan İzi
+# Human Trace
 
-**Yapay Zekâ Cevaplarında İnsanlık Hafızası ve Hikâye Katmanı**
+**A Layer of Human Memory and Story in AI Answers**
 
-> **İnsan İzi, yapay zekânın kullandığı insanlık bilgisinin arkasındaki insanları, toplulukları ve yaşanmışlıkları doğru, doğal ve hikâye odaklı biçimde yeniden görünür hale getiren bir anlatı katmanıdır.**
-
----
-
-## 1. Projenin Temel Fikri
-
-Yapay zekâ bugün insanlığın yüzyıllar boyunca ürettiği bilimsel, kültürel, sanatsal ve düşünsel birikimi kullanarak cevaplar üretiyor. Ancak ortaya çıkan cevap çoğu zaman bu bilginin arkasındaki insanları, toplulukları, dönemleri ve yaşanmışlıkları görünmez hale getiriyor.
-
-**İnsan İzi**, yapay zekâ cevabının arkasındaki anlamlı insan hikâyelerini doğal biçimde görünür hale getiren bir anlatı katmanıdır.
-
-Amaç klasik bir kaynakça, tarihçe veya ansiklopedi oluşturmak değildir.
-
-Amaç:
-
-> Bir bilginin arkasında bir insan, bir toplum, bir mücadele, bir merak veya bir dönem varsa bunu gerektiği yerde yeniden hikâyenin içine katmak.
+> **Human Trace is a narrative layer that makes the people, communities and lived experience behind the human knowledge an AI uses visible again — accurately, naturally and through story.**
 
 ---
 
-## 2. Temel Tasarım İlkeleri
+## 1. The Core Idea
 
-### 2.1. Önce cevap, sonra insan izi
+AI today produces answers by drawing on the scientific, cultural, artistic and intellectual work humanity has accumulated over centuries. Yet the answer that comes out usually renders the people, communities, periods and lived experience behind that knowledge invisible.
 
-AI normal soruya önce doğal ve doğru şekilde cevap verir. İnsan hikâyesi cevabı boğmaz. Ancak anlamlı bir bağlantı varsa sistem kısa bir İnsan İzi oluşturabilir.
+**Human Trace** is a narrative layer that naturally surfaces the meaningful human stories behind an AI answer.
 
-Örnek:
+The goal is not to build a conventional bibliography, chronology or encyclopedia.
 
-> Bugün birkaç cümlede anlattığımız radyoaktivite bilgisinin arkasında onlarca yıllık deneysel çalışma bulunuyor. Marie ve Pierre Curie'nin laboratuvar koşulları bugünün standartlarından çok uzaktı ve iyonlaştırıcı radyasyonun sağlık üzerindeki etkileri henüz yeterince bilinmiyordu.
+The goal is:
 
-### 2.2. Hikâye, veri tablosu değildir
+> When a piece of knowledge has a person, a society, a struggle, a curiosity or an era behind it, bring that back into the story where it belongs.
 
-Kullanıcıya:
+---
 
-* %37 katkı,
-* %82 güven,
-* 14 kaynak,
+## 2. Core Design Principles
+
+### 2.1. Answer first, human trace second
+
+The AI answers the actual question naturally and correctly first. The human story never smothers the answer. But when a meaningful connection exists, the system may add a short Human Trace.
+
+Example:
+
+> Behind the few sentences we use to describe radioactivity today lie decades of experimental work. Marie and Pierre Curie's laboratory conditions were far from today's standards, and the health effects of ionizing radiation were not yet properly understood.
+
+### 2.2. A story is not a data table
+
+Things like:
+
+* 37% contribution,
+* 82% confidence,
+* 14 sources,
 * attribution score
 
-gibi bilgiler ana deneyimde gösterilmez. Bunlar gerekiyorsa sistemin arka planında tutulur.
+are not shown in the main experience. If they are needed at all, they stay in the system's backend.
 
-Kullanıcının gördüğü şey:
+What the user sees should be:
 
-> İnsan → dönem → problem → yaşanan süreç → bugün kullandığımız sonuç
+> person → era → problem → the process lived through → the result we use today
 
-olmalıdır.
+### 2.3. Do not manufacture single heroes
 
-### 2.3. Tek kahraman yaratma
+The system must not default to well-known names like Einstein, Newton, Mozart or Curie.
 
-Sistem yalnızca Einstein, Newton, Mozart, Curie gibi tanınmış isimleri seçmemelidir.
+Knowledge may have been developed by:
 
-Bilgi;
+* a person,
+* a team,
+* a laboratory,
+* a craft tradition,
+* a society,
+* a culture,
+* anonymous workers,
+* independent researchers working separately.
 
-* bir kişi,
-* bir ekip,
-* bir laboratuvar,
-* bir zanaat geleneği,
-* bir toplum,
-* bir kültür,
-* anonim çalışanlar,
-* birbirinden bağımsız araştırmacılar
+Where appropriate, the system should say plainly:
 
-tarafından geliştirilmiş olabilir.
+> "It would not be accurate to attribute this development to a single person."
 
-Gerekirse sistem açıkça şunu demelidir:
+### 2.4. Never distort the truth for the sake of the story
 
-> "Bu gelişmeyi tek bir kişiye atfetmek doğru olmaz."
+Dramatic narration is allowed, but:
 
-### 2.4. Hikâye uğruna gerçek çarpıtılmaz
+* legends are not told as fact,
+* disputed events are not presented as settled,
+* a person's motivation is not invented,
+* causality is not asserted where none is established,
+* nothing is romanticized.
 
-Dramatik anlatım yapılabilir ancak:
-
-* efsaneler gerçekmiş gibi anlatılmaz,
-* tartışmalı olaylar kesinleştirilmez,
-* kişinin motivasyonu uydurulmaz,
-* nedensellik kurulmadığı yerde kurulmaz,
-* romantizasyon yapılmaz.
-
-Hikâye gerçekliğin taşıyıcısıdır, alternatifi değildir.
+The story carries reality; it does not substitute for it.
 
 ---
 
-## 3. Kullanıcı Deneyimi
+## 3. User Experience
 
-İnsan İzi üç katmanda çalışmalıdır.
+Human Trace works in three layers.
 
-### Katman 1 — İz
+### Layer 1 — Trace
 
-Yaklaşık 2–5 cümle. Amaç kullanıcının dikkatini çekmek.
+Roughly 2–5 sentences. The goal is to catch the user's attention.
 
-Örnek:
+Example:
 
-> **İnsan İzi — Beethoven**
-> Beethoven'ın Dokuzuncu Senfoni'yi bestelediği dönemde işitme kaybı çok ilerlemişti. Bu nedenle bugün büyük bir orkestrayla özdeşleştirdiğimiz eserin önemli bölümünü kendi zihnindeki müzik üzerinden kurdu. Eserin hikâyesi bu nedenle yalnızca müzik tarihi değil, insanın üretme biçimi açısından da dikkat çekicidir.
+> **Human Trace — Beethoven**
+> By the time Beethoven composed the Ninth Symphony, his hearing loss was severe. A significant part of the work we now associate with a full orchestra was therefore built through the music in his own mind. That makes the piece notable not only in music history but in how a human being creates.
 
-### Katman 2 — Hikâye
+### Layer 2 — Story
 
-Yaklaşık 1–3 dakikalık okuma. Burada:
+Roughly a 1–3 minute read. It covers:
 
-* kişi,
-* dönem,
-* koşullar,
-* problem,
-* başarısızlıklar,
-* ilişkiler,
-* dönüm noktaları
+* the person,
+* the era,
+* the conditions,
+* the problem,
+* the failures,
+* the relationships,
+* the turning points.
 
-anlatılır.
+### Layer 3 — Go Deeper
 
-### Katman 3 — Derinleş
+For users who want more:
 
-İsteyen kullanıcı için:
-
-* zaman çizelgesi,
-* diğer katkı sağlayan kişiler,
-* tarihsel tartışmalar,
-* orijinal çalışmalar,
-* mektuplar,
-* belgeler,
-* bilimsel yayınlar,
-* kültürel bağlam
-
-gösterilebilir.
+* timeline,
+* other contributors,
+* historical disputes,
+* original work,
+* letters,
+* documents,
+* scientific publications,
+* cultural context.
 
 ---
 
-## 4. Sistem Mimarisi
+## 4. System Architecture
 
 ```
-KULLANICI SORUSU
+USER QUESTION
         ↓
-ANA AI CEVABI
+MAIN AI ANSWER
         ↓
-KAVRAM / FİKİR / ESER TESPİTİ
+CONCEPT / IDEA / WORK DETECTION
         ↓
-"İNSAN İZİ VAR MI?" KARARI
+"IS THERE A HUMAN TRACE?" DECISION
         ↓
-TARİHSEL VE KÜLTÜREL ARAŞTIRMA
+HISTORICAL AND CULTURAL RESEARCH
         ↓
-KAYNAK DOĞRULAMA
+SOURCE VERIFICATION
         ↓
-HİKÂYE MOTORU
+STORY ENGINE
         ↓
-KISA İNSAN İZİ
+SHORT HUMAN TRACE
         ↓
-İSTEĞE BAĞLI DERİN HİKÂYE
+OPTIONAL DEEP STORY
 ```
 
 ---
 
-## 5. İnsan İzi Seçim Motoru
+## 5. The Human Trace Selection Engine
 
-Her kavram için hikâye üretilmemeli. Sistem şu soruları sorar:
+A story should not be generated for every concept. The system asks:
 
-* **A.** Arkasında anlamlı bir insan hikâyesi var mı?
-* **B.** Bu hikâye kullanıcının mevcut sorusuyla gerçekten ilişkili mi?
-* **C.** Hikâye genel cevaba değer katıyor mu?
-* **D.** Atıf tarihsel olarak yeterince doğrulanabilir mi?
-* **E.** Hikâyenin anlatılmasının insanı veya topluluğu yanlış temsil etme riski var mı?
+* **A.** Is there a meaningful human story behind it?
+* **B.** Is that story genuinely related to the user's current question?
+* **C.** Does the story add value to the overall answer?
+* **D.** Is the attribution historically verifiable enough?
+* **E.** Does telling the story risk misrepresenting a person or a community?
 
-Anlamlı değilse İnsan İzi gösterilmez.
+If it is not meaningful, no Human Trace is shown.
 
 ---
 
-## 6. İnsan İzi Türleri
+## 6. Types of Human Trace
 
-Sistem yalnızca bilim insanlarını tanımamalıdır.
+The system must recognize more than scientists.
 
-| Tür | Örnek |
+| Type | Examples |
 |---|---|
-| Bilim | Curie, Faraday, Darwin, Tesla, Rosalind Franklin |
-| Mühendislik | Mucitler, mühendis ekipleri, sanayi çalışanları, tasarımcılar |
-| Sanat | Mozart, Beethoven, Van Gogh, mimarlar, zanaatkârlar |
-| Felsefe | Descartes, Kant, İbn Sina, Farabi |
-| Kültürel bilgi | Bir toplumun uzun yıllar geliştirdiği yöntemler |
-| Geleneksel bilgi | Tarım, fermentasyon, metalurji, bitkisel kullanım |
-| Kolektif çalışmalar | NASA ekipleri, CERN, Manhattan Project |
+| Science | Curie, Faraday, Darwin, Tesla, Rosalind Franklin |
+| Engineering | Inventors, engineering teams, industrial workers, designers |
+| Art | Mozart, Beethoven, Van Gogh, architects, artisans |
+| Philosophy | Descartes, Kant, Ibn Sina, Al-Farabi |
+| Cultural knowledge | Methods a society developed over long periods |
+| Traditional knowledge | Agriculture, fermentation, metallurgy, use of plants |
+| Collective work | NASA teams, CERN, the Manhattan Project |
 
-**İsimsiz katkılar** — Gerektiğinde kolektif hafıza da korunabilir:
+**Unnamed contributions** — collective memory can be preserved where appropriate:
 
-> "Bu teknolojinin gelişmesinde binlerce isimsiz teknisyen ve işçinin katkısı bulunuyor."
+> "Thousands of unnamed technicians and workers contributed to the development of this technology."
 
 ---
 
-## 7. MVP — İlk Prototip
+## 7. MVP — First Prototype
 
-İlk versiyon çok küçük tutulmalıdır.
+The first version should be kept very small.
 
-### Faz 1 — Proof of Concept
+### Phase 1 — Proof of Concept
 
-20–30 farklı konu belirle:
+Pick 20–30 different subjects:
 
-radyoaktivite · görelilik · termodinamik · elektrik · penisilin · DNA · bilgisayar · internet · Mozart · Beethoven · perspektif · matbaa · kahve · fermentasyon · pusula
+radioactivity · relativity · thermodynamics · electricity · penicillin · DNA · the computer · the internet · Mozart · Beethoven · perspective · the printing press · coffee · fermentation · the compass
 
-Her biri için kaliteli İnsan İzi çıktıları oluştur. Amaç algoritmanın değil **deneyimin** işe yarayıp yaramadığını test etmek.
+Produce high-quality Human Trace outputs for each. The point is to test whether the **experience** works, not the algorithm.
 
-### Faz 2 — Otomatik Tespit
+### Phase 2 — Automatic Detection
 
-AI verilen cevaptan kişi, keşif, teori, eser, teknik ve kültürel uygulama adaylarını çıkarsın. Her aday için `Human Story Relevance` kararı versin.
+The AI extracts candidates from the answer it just gave: people, discoveries, theories, works, techniques, cultural practices. For each candidate it makes a `Human Story Relevance` decision.
 
-Çıktı:
+Output:
 
 ```
 Human Trace: YES
@@ -209,78 +201,78 @@ Suggested story: Sadi Carnot
 Reason: Foundational human story
 ```
 
-### Faz 3 — Retrieval
+### Phase 3 — Retrieval
 
-Tarihsel hikâye AI belleğine bırakılmamalı. Sistem güvenilir kaynaklardan ilgili materyali toplamalı.
+Historical stories must not be left to the AI's memory. The system should gather the relevant material from reliable sources.
 
-Öncelik:
+Priority:
 
-1. Birincil kaynaklar
-2. Üniversite / müze / akademik kurumlar
-3. Akademik yayınlar
-4. Güvenilir biyografik kaynaklar
-5. Genel kaynaklar
+1. Primary sources
+2. Universities / museums / academic institutions
+3. Academic publications
+4. Reliable biographical sources
+5. General sources
 
-### Faz 4 — Story Engine
+### Phase 4 — Story Engine
 
-Toplanan gerçekleri kısa ve doğal bir anlatıya dönüştürür. Çıktı: `Short Trace`, `Story`, `Deep Story`.
+Turns the collected facts into a short, natural narrative. Output: `Short Trace`, `Story`, `Deep Story`.
 
-### Faz 5 — Kullanıcı Testi
+### Phase 5 — User Testing
 
-Şu sorular ölçülür:
+The questions to measure:
 
-* İnsanlar İnsan İzi'ni açıyor mu?
-* Hikâyeyi tamamlıyor mu?
-* Ana cevabı bölüyor mu?
-* İnsanlar daha fazlasını okumak istiyor mu?
-* İnsanlar öğrendikleri bilgiyi daha iyi hatırlıyor mu?
-* AI'ya olan güveni artırıyor mu?
-* İnsanlık bilgisinin değerini daha görünür hale getiriyor mu?
-
----
-
-## 8. İlk Geliştirme Yol Haritası
-
-**Faz 1 — Konsept**
-İnsan İzi prensiplerini yaz · 20 örnek oluştur · iyi/kötü İnsan İzi örneklerini belirle · hikâye uzunluklarını tanımla
-
-**Faz 2 — Prompt Prototype**
-Tek bir LLM kullan. Akış: `Question → Answer → Human Trace Detection → Story`. İlk aşamada kodlama minimum tutulabilir.
-
-**Faz 3 — Retrieval**
-Web/search/RAG ekle. Hikâyenin gerçeklerini doğrula.
-
-**Faz 4 — Basit Arayüz**
-Ana cevap içerisinde `İnsan İzi ↗` gibi açılabilir bir bölüm oluştur.
-
-**Faz 5 — Knowledge Graph**
-Prototip başarılı olursa `Person · Event · Concept · Work · Culture · Place · Period · Relationship · Source` yapısında kalıcı hafıza kurulabilir.
-
-**Faz 6 — Kişiselleştirme**
-Sistem kullanıcının ilgisine göre İnsan İzi yoğunluğunu ayarlar. Bazı kullanıcı daha fazla insan hikâyesi ister, bazı kullanıcı yalnızca gerçekten özel durumlarda ister.
+* Do people open the Human Trace?
+* Do they finish the story?
+* Does it interrupt the main answer?
+* Do people want to read more?
+* Do people remember what they learned better?
+* Does it increase trust in the AI?
+* Does it make the value of human knowledge more visible?
 
 ---
 
-## 9. AI Sistem Promptu
+## 8. Initial Development Roadmap
 
-İlk prototipte doğrudan kullanılabilecek sistem promptu ayrı bir dosyada tutuluyor:
+**Phase 1 — Concept**
+Write the Human Trace principles · produce 20 examples · define what makes a good vs. bad Human Trace · define story lengths
+
+**Phase 2 — Prompt Prototype**
+Use a single LLM. Flow: `Question → Answer → Human Trace Detection → Story`. Coding can be kept to a minimum at this stage.
+
+**Phase 3 — Retrieval**
+Add web/search/RAG. Verify the facts of the story.
+
+**Phase 4 — Simple Interface**
+Create an expandable section inside the main answer, e.g. `Human Trace ↗`.
+
+**Phase 5 — Knowledge Graph**
+If the prototype succeeds, build persistent memory structured as `Person · Event · Concept · Work · Culture · Place · Period · Relationship · Source`.
+
+**Phase 6 — Personalization**
+The system tunes Human Trace density to the user's interest. Some users want more human stories; others want them only in genuinely special cases.
+
+---
+
+## 9. The AI System Prompt
+
+The system prompt, usable directly in the first prototype, lives in its own file:
 
 → [`prompts/human-trace-system-prompt.md`](prompts/human-trace-system-prompt.md)
 
 ---
 
-## 10. İlk Başarı Kriteri
+## 10. First Success Criterion
 
-İlk hedef teknik olarak kusursuz bir tarihsel knowledge graph kurmak değildir. İlk soru çok daha basit olmalıdır:
+The first goal is not a technically flawless historical knowledge graph. The first question is much simpler:
 
-> **Bir AI cevabına doğru yerde 3–5 cümlelik bir insan hikâyesi eklediğimizde, cevap daha anlamlı ve hatırlanabilir hale geliyor mu?**
+> **When we add a 3–5 sentence human story to an AI answer in the right place, does the answer become more meaningful and more memorable?**
 
-Eğer cevap evetse, arkasındaki teknik sistem daha sonra derinleştirilebilir.
+If the answer is yes, the technical system behind it can be deepened later.
 
 ---
 
-## 11. MVP Yaklaşımı Üzerine Not
+## 11. A Note on the MVP Approach
 
-MVP'de **knowledge graph ile başlanmamalı**. Önce 20–30 elle seçilmiş örnekte `normal AI cevabı + İnsan İzi` deneyimini test etmek daha doğru. İnsanlar gerçekten hikâyeyi açıyor ve hatırlıyorsa retrieval, doğrulama ve graph altyapısına yatırım yapmak anlamlı hale gelir.
+The MVP should **not** start with a knowledge graph. It is better to test the `normal AI answer + Human Trace` experience on 20–30 hand-picked examples first. If people genuinely open the story and remember it, investing in retrieval, verification and graph infrastructure becomes meaningful.
 
-Güven düzeyi: ürün konsepti için **yüksek**; otomatik tarihsel atıf kalitesi için **orta** — bu nedenle doğrulama katmanı zorunlu olmalı.
+Confidence level: **high** for the product concept; **medium** for the quality of automated historical attribution — which is exactly why a verification layer must be mandatory.

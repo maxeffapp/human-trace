@@ -1,6 +1,6 @@
 # Human Trace — System Prompt
 
-> İlk prototipte doğrudan kullanılabilir. Kavramsal arka plan için [README](../README.md).
+> Usable directly in the first prototype. For the conceptual background, see the [README](../README.md).
 
 ---
 
