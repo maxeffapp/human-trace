@@ -1,0 +1,25 @@
+name: harness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: harness/package-lock.json
+      - run: npm ci
+        working-directory: harness
+      - run: npm run typecheck
+        working-directory: harness
+      # No API key: these tests cover the markdown parsing and the integrity of the
+      # gold set, which is what a malformed example file would silently break.
+      - run: npm test
+        working-directory: harness
