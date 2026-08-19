@@ -2,7 +2,7 @@
 
 Execution plan for Human Trace. The [README](README.md) describes *what* the project is; this file describes *what to do next, in what order*.
 
-**Current phase: Phase 1 — Concept and Gold Examples**
+**Current phase: Phase 2 — Prompt Prototype** (blocked on two Open Decisions: implementation language and model)
 
 ## How this roadmap works
 
@@ -65,28 +65,36 @@ Three of these are deliberately hard cases and must not be skipped:
 ### 1.3 Write the examples
 
 * [x] Agree the file format: question, plain answer, Trace, Story, sources
-* [ ] Write all 25 as `examples/<slug>.md`
+* [x] Write all 25 as `examples/<slug>.md`
 * [x] For each, write the **plain answer first** and only then the Trace, so the Trace is genuinely additive
-* [ ] Reread each one asking: would removing the Trace make the answer worse? If not, the Trace is wrong
+* [x] Reread each one asking: would removing the Trace make the answer worse? If not, the Trace is wrong
 
-**Progress: 3 of 25.** `radioactivity` (baseline), `polynesian-wayfinding` (no named originator), `transistor` (contested credit) — one straightforward case and the two hardest, written first on purpose.
+**Complete: 25 of 25**, plus 15 negative cases. Index and per-subject rationale in [`examples/README.md`](examples/README.md).
 
 ### 1.4 Build the negative set
 
 Restraint is the hard part. A layer that fires on everything is worse than no layer.
 
-* [ ] Write `examples/negative/` with **15 questions that must produce no Trace**
-* [ ] Cover: purely practical questions, personal advice, current events, arithmetic, code debugging, subjective preference
-* [ ] For each, record one sentence on *why* a Trace would be wrong here
+* [x] Write `examples/negative/` with **15 questions that must produce no Trace**
+* [x] Cover: purely practical questions, personal advice, current events, arithmetic, code debugging, subjective preference
+* [x] For each, record one sentence on *why* a Trace would be wrong here
 
 ### 1.5 Fact-check
 
-* [ ] Check every factual claim in all 25 traces against a source
-* [ ] Record sources inline in each example file
-* [ ] Mark every disputed claim explicitly as disputed
-* [ ] Delete any sentence that cannot be sourced — do not soften it, delete it
+* [x] Check every factual claim in all 25 traces against a source
+* [x] Record sources inline in each example file
+* [x] Mark every disputed claim explicitly as disputed
+* [x] Delete any sentence that cannot be sourced — do not soften it, delete it
 
-**Exit criteria:** 25 fact-checked examples and 15 negative cases are committed, and a reader who knows nothing about the project can tell a good Trace from a bad one using only the rubric.
+**Exit criteria:** 25 fact-checked examples and 15 negative cases are committed, and a reader who knows nothing about the project can tell a good Trace from a bad one using only the rubric. ✅ on the first clause; the second is a judgement for the owner.
+
+**What fact-checking changed.** Three claims written into the rubric or into drafts did not survive verification and were cut or corrected rather than softened:
+
+* Shockley was described as "not in the room" for the point-contact transistor and the three as "barely on speaking terms" by 1956. Neither is supported; replaced with Bardeen's 1951 departure and Brattain's transfer request, and his motive attributed to the sources rather than asserted.
+* Gutenberg was described as losing his workshop to Fust after the lawsuit. The Helmasperger instrument does not establish it and he appears to have printed again before 1460.
+* Two vivid details — ARPANET's first message failing partway through "LOGIN", and the ENIAC women being taken for models in publicity photographs — could not be traced to a reliable source and were dropped. Both omissions are recorded in the relevant files.
+
+This is the phase working as intended. All three would have passed a casual reader.
 
 ---
 
