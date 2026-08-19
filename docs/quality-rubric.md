@@ -109,12 +109,12 @@ The correction is made by stating what actually happened, not by scolding the re
 > ❌ **Bad**
 > The transistor was invented by William Shockley at Bell Labs in 1947. His brilliant insight into semiconductor physics launched the digital age and earned him the Nobel Prize.
 
-Shockley did not build it and was not present when it worked. The word *brilliant* is doing what the facts were supposed to do.
+Shockley directed the group but did not build the device. The word *brilliant* is doing what the facts were supposed to do.
 
 > ✅ **Good**
-> The first working transistor was built in December 1947 by John Bardeen and Walter Brattain, pressing gold contacts into a slab of germanium. Their supervisor, William Shockley, had pushed the research but was not in the room, and responded to being left off the patent by working out a better design of his own within weeks. The three shared a Nobel Prize in 1956, by which point they were barely on speaking terms.
+> The first working transistor was built in December 1947 by John Bardeen and Walter Brattain, pressing two gold contacts into a slab of germanium. Their supervisor, William Shockley, had directed the research but had no hand in the device itself, and spent the following month working alone on a rival design — spurred, by the standard accounts, by resentment at having been left off the patent. The three shared a Nobel Prize in 1956; by then Bardeen had left Bell Labs altogether and Brattain had asked to be moved out of Shockley's group.
 
-Same length. The credit is placed accurately, and the friction is reported rather than smoothed over.
+The credit is placed accurately, the friction is reported rather than smoothed over, and the motive is attributed to the sources rather than asserted as fact. Fully worked out, with citations, in [`examples/transistor.md`](../examples/transistor.md).
 
 ### 3.3 Dramatized → honest about the record
 

@@ -48,13 +48,13 @@ Everything in this phase is written by hand. No model is asked to generate a Hum
 
 The set must stress-test the principles, not just showcase them. Aim for **25 subjects** with enforced category coverage.
 
-* [ ] Science — 5: radioactivity, thermodynamics, relativity, the structure of DNA, penicillin
-* [ ] Engineering — 4: the printing press, the magnetic compass, the transistor, the internet
-* [ ] Art — 4: Beethoven's Ninth Symphony, linear perspective, Van Gogh, Mozart's Requiem
-* [ ] Philosophy — 3: Descartes' method, Ibn Sina's medicine, Kant's ethics
-* [ ] Cultural and traditional knowledge — 5: coffee, fermentation, Andean potato cultivation, Polynesian wayfinding, wootz steel
-* [ ] Collective work — 2: the Apollo guidance software, the web at CERN
-* [ ] Forgotten and unnamed contributors — 2: the ENIAC programmers, Henrietta Lacks and the HeLa line
+* [x] Science — 5: radioactivity, thermodynamics, relativity, the structure of DNA, penicillin
+* [x] Engineering — 4: the printing press, the magnetic compass, the transistor, the internet
+* [x] Art — 4: Beethoven's Ninth Symphony, linear perspective, Van Gogh, Mozart's Requiem
+* [x] Philosophy — 3: Descartes' method, Ibn Sina's medicine, Kant's ethics
+* [x] Cultural and traditional knowledge — 5: coffee, fermentation, Andean potato cultivation, Polynesian wayfinding, wootz steel
+* [x] Collective work — 2: the Apollo guidance software, the web at CERN
+* [x] Forgotten and unnamed contributors — 2: the ENIAC programmers, Henrietta Lacks and the HeLa line
 
 Three of these are deliberately hard cases and must not be skipped:
 
@@ -64,9 +64,11 @@ Three of these are deliberately hard cases and must not be skipped:
 
 ### 1.3 Write the examples
 
-* [ ] Agree the file format: question, plain answer, Trace, Story, sources
+* [x] Agree the file format: question, plain answer, Trace, Story, sources
 * [ ] Write all 25 as `examples/<slug>.md`
-* [ ] For each, write the **plain answer first** and only then the Trace, so the Trace is genuinely additive
+
+**Progress: 3 of 25.** `radioactivity` (baseline), `polynesian-wayfinding` (no named originator), `transistor` (contested credit) — one straightforward case and the two hardest, written first on purpose.
+* [x] For each, write the **plain answer first** and only then the Trace, so the Trace is genuinely additive
 * [ ] Reread each one asking: would removing the Trace make the answer worse? If not, the Trace is wrong
 
 ### 1.4 Build the negative set
