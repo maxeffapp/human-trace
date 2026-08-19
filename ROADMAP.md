@@ -66,10 +66,10 @@ Three of these are deliberately hard cases and must not be skipped:
 
 * [x] Agree the file format: question, plain answer, Trace, Story, sources
 * [ ] Write all 25 as `examples/<slug>.md`
-
-**Progress: 3 of 25.** `radioactivity` (baseline), `polynesian-wayfinding` (no named originator), `transistor` (contested credit) — one straightforward case and the two hardest, written first on purpose.
 * [x] For each, write the **plain answer first** and only then the Trace, so the Trace is genuinely additive
 * [ ] Reread each one asking: would removing the Trace make the answer worse? If not, the Trace is wrong
+
+**Progress: 3 of 25.** `radioactivity` (baseline), `polynesian-wayfinding` (no named originator), `transistor` (contested credit) — one straightforward case and the two hardest, written first on purpose.
 
 ### 1.4 Build the negative set
 
