@@ -105,9 +105,9 @@ This is the phase working as intended. All three would have passed a casual read
 ### 2.1 Minimal harness
 
 * [x] Decide the implementation language and model (see Decisions below)
-* [ ] Build the smallest possible runner: question in → answer plus optional Trace out
-* [ ] Keep the system prompt in `prompts/`, loaded from file, never pasted into code
-* [ ] Log every run so outputs can be compared over time
+* [x] Build the smallest possible runner: question in → answer plus optional Trace out
+* [x] Keep the system prompt in `prompts/`, loaded from file, never pasted into code
+* [x] Log every run so outputs can be compared over time
 
 **Decisions.**
 

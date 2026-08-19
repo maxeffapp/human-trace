@@ -1,0 +1,20 @@
+{
+  "name": "human-trace-harness",
+  "private": true,
+  "type": "module",
+  "description": "Phase 2 evaluation harness: runs the Human Trace system prompt over the gold example set.",
+  "scripts": {
+    "eval": "tsx src/run.ts",
+    "typecheck": "tsc --noEmit",
+    "compare": "tsx src/compare.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.118.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
