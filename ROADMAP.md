@@ -22,7 +22,7 @@ Execution plan for Human Trace. The [README](README.md) describes *what* the pro
 * [x] Extract the system prompt into its own file (`prompts/human-trace-system-prompt.md`)
 * [x] Add the MIT license
 * [x] Write the repository description
-* [ ] Add repository topics
+* [x] Add repository topics
 * [x] Create the `examples/` directory structure
 
 **Exit criteria:** anyone landing on the repository understands the idea and knows what they may do with it. ✅
