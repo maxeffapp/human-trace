@@ -123,22 +123,18 @@ For users who want more:
 ```
 USER QUESTION
         ↓
-MAIN AI ANSWER
+ANSWER + CONTRIBUTION CANDIDATES
         ↓
-CONCEPT / IDEA / WORK DETECTION
+LIVE HISTORICAL / CULTURAL RESEARCH
         ↓
-"IS THERE A HUMAN TRACE?" DECISION
+SOURCE MATCHING AND VERIFICATION
         ↓
-HISTORICAL AND CULTURAL RESEARCH
+STRUCTURED HUMAN TRACE RESPONSE
         ↓
-SOURCE VERIFICATION
-        ↓
-STORY ENGINE
-        ↓
-SHORT HUMAN TRACE
-        ↓
-OPTIONAL DEEP STORY
+HOST SURFACE: CHAT · EXTENSION · SEARCH · WEB · API
 ```
+
+Human Trace is the reusable engine and response contract in this diagram. The web application in this repository is its reference surface, not the final destination of the product.
 
 ---
 
@@ -176,48 +172,30 @@ The system must recognize more than scientists.
 
 ---
 
-## 7. MVP — First Prototype
+## 7. MVP — Dynamic Reference Implementation
 
-The first version should be kept very small.
+The MVP is already structured as a small but real system:
 
-### Phase 1 — Proof of Concept
+1. A user asks any question.
+2. The server generates the main answer and decides whether a Human Trace is useful.
+3. When it is useful, the engine performs live web research and returns only contributors whose source URLs appeared in that search run.
+4. One structured response links contributors to answer paragraphs, stories and visible sources.
+5. The same data can be viewed as a compact `Contributions` list or a connected `Lineage` flow.
+6. When a trace would be forced or weak, the answer remains complete and the engine returns `no trace`.
 
-Pick 20–30 different subjects:
+Production content is never hand-authored or selected from canned stories. A fixed set of questions may be used to evaluate the system, but their answers and traces must be generated and verified at runtime.
 
-radioactivity · relativity · thermodynamics · electricity · penicillin · DNA · the computer · the internet · Mozart · Beethoven · perspective · the printing press · coffee · fermentation · the compass
+The working reference app lives in [`app/`](app/README.md).
 
-Produce high-quality Human Trace outputs for each. The point is to test whether the **experience** works, not the algorithm.
-
-### Phase 2 — Automatic Detection
-
-The AI extracts candidates from the answer it just gave: people, discoveries, theories, works, techniques, cultural practices. For each candidate it makes a `Human Story Relevance` decision.
-
-Output:
-
-```
-Human Trace: YES
-Subject: Thermodynamics
-Suggested story: Sadi Carnot
-Reason: Foundational human story
-```
-
-### Phase 3 — Retrieval
-
-Historical stories must not be left to the AI's memory. The system should gather the relevant material from reliable sources.
-
-Priority:
+### Source priority
 
 1. Primary sources
-2. Universities / museums / academic institutions
+2. Universities, museums and academic institutions
 3. Academic publications
 4. Reliable biographical sources
 5. General sources
 
-### Phase 4 — Story Engine
-
-Turns the collected facts into a short, natural narrative. Output: `Short Trace`, `Story`, `Deep Story`.
-
-### Phase 5 — User Testing
+### MVP learning questions
 
 The questions to measure:
 
@@ -231,27 +209,30 @@ The questions to measure:
 
 ---
 
-## 8. Initial Development Roadmap
+## 8. Product and Distribution Path
 
-**Phase 1 — Concept**
-Write the Human Trace principles · produce 20 examples · define what makes a good vs. bad Human Trace · define story lengths
+**Phase 1 — Dynamic MVP**
 
-**Phase 2 — Prompt Prototype**
-Use a single LLM. Flow: `Question → Answer → Human Trace Detection → Story`. Coding can be kept to a minimum at this stage.
+Harden the engine contract, source policy and two-mode reference interface.
 
-**Phase 3 — Retrieval**
-Add web/search/RAG. Verify the facts of the story.
+**Phase 2 — Evaluation**
 
-**Phase 4 — Simple Interface**
-Create an expandable section inside the main answer, e.g. `Human Trace ↗`.
+Run a fixed question set through the live system; people grade the results but do not write the production stories.
 
-**Phase 5 — Knowledge Graph**
-If the prototype succeeds, build persistent memory structured as `Person · Event · Concept · Work · Culture · Place · Period · Relationship · Source`.
+**Phase 3 — First host integration**
 
-**Phase 6 — Personalization**
-The system tunes Human Trace density to the user's interest. Some users want more human stories; others want them only in genuinely special cases.
+Package Human Trace as one of: a chat mode, a browser extension, a search companion or an API/SDK. The host should call the same provider boundary used by the reference app.
+
+**Phase 4 — Product instrumentation**
+
+Measure opens, source visits, story depth, trace fatigue, trust and recall.
+
+**Phase 5 — Memory and personalization**
+
+Only after real usage supports it, add a source-attached knowledge graph and tune trace density without weakening accuracy.
 
 For the detailed, task-level execution plan see [`ROADMAP.md`](ROADMAP.md).
+For the reusable engine boundary and host-surface strategy see [`docs/product-system.md`](docs/product-system.md).
 
 ---
 
@@ -275,9 +256,9 @@ If the answer is yes, the technical system behind it can be deepened later.
 
 ## 11. A Note on the MVP Approach
 
-The MVP should **not** start with a knowledge graph. It is better to test the `normal AI answer + Human Trace` experience on 20–30 hand-picked examples first. If people genuinely open the story and remember it, investing in retrieval, verification and graph infrastructure becomes meaningful.
+The MVP should **not** start with a knowledge graph or a library of hand-written stories. It tests `normal AI answer + dynamically researched Human Trace` through one reusable engine and a reference interface. If people genuinely open the story, inspect its sources and remember it, deeper retrieval and graph infrastructure become meaningful.
 
-Confidence level: **high** for the product concept; **medium** for the quality of automated historical attribution — which is exactly why a verification layer must be mandatory.
+The product hypothesis is that Human Trace becomes useful when it travels with answers people already use. That is why the repository keeps the engine independent from the interface and treats chat, extension, search and API integrations as host surfaces rather than separate products.
 
 ---
 
