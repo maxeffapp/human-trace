@@ -104,10 +104,27 @@ This is the phase working as intended. All three would have passed a casual read
 
 ### 2.1 Minimal harness
 
-* [ ] Decide the implementation language and model (see Open Decisions)
+* [x] Decide the implementation language and model (see Decisions below)
 * [ ] Build the smallest possible runner: question in → answer plus optional Trace out
 * [ ] Keep the system prompt in `prompts/`, loaded from file, never pasted into code
 * [ ] Log every run so outputs can be compared over time
+
+**Decisions.**
+
+*Runtime: TypeScript on Node, run with `tsx`, no framework.* The repository has no stack yet, the owner reads TypeScript, and Phase 5's demo surface is most likely a web page — one language end to end. The official SDK is `@anthropic-ai/sdk`.
+
+*Model: `claude-opus-5`.* Phase 2's question is whether the system prompt can produce restraint, not whether a cheaper model can be coaxed into it — so establish the ceiling on the most capable model first, then sweep downward and record where quality holds. $5 / $25 per million input / output tokens; 1M context; 128K max output.
+
+*Effort: sweep, don't assume.* `output_config.effort` defaults to `high`. Run the full set at `medium`, `high` and `xhigh` and record the scores against cost — this model's `low` and `medium` are unusually strong, and a default carried over from another project is not evidence.
+
+*Thinking is on by default on this model.* Leave it on. `max_tokens` caps thinking and response text together, so size it with headroom rather than around the expected answer length.
+
+**Cost mechanics that matter at 40 cases × many prompt versions.**
+
+* **Cache the system prompt.** Put a `cache_control` breakpoint on the prompt block. It is the only large constant in the request and it is identical across all 40 cases; cache reads cost about a tenth of the input price. The minimum cacheable prefix on this model is 512 tokens, which `prompts/human-trace-system-prompt.md` clears.
+* **Do not fan out cold.** A cache entry is readable only once the first response starts streaming. Firing all 40 in parallel means all 40 pay full price. Send one, wait for its first token, then release the rest.
+* **Use the Batch API for full sweeps.** Half price, results typically within the hour. An eval run is not latency-sensitive; only single-case iteration needs the synchronous path.
+* **Handle `stop_reason: "refusal"` before reading content.** This model can decline a request and return a normal 200 with empty content. Unlikely on this subject matter, but a harness that indexes `content[0]` unconditionally will crash rather than report.
 
 ### 2.2 Evaluate against the gold set
 
@@ -241,8 +258,8 @@ Tracked from Phase 2 onward.
 
 Deliberately unresolved. Each needs an owner's call before the phase that depends on it.
 
-* **Implementation language and runtime** — needed for Phase 2
-* **Model choice** — needed for Phase 2
+* ~~**Implementation language and runtime**~~ — resolved: TypeScript on Node (Phase 2 § Decisions)
+* ~~**Model choice**~~ — resolved: `claude-opus-5` (Phase 2 § Decisions)
 * **Retrieval approach: live search or a curated corpus** — needed for Phase 4
 * **Demo surface: web, browser extension, or API** — needed for Phase 5
 * **Where the layer ultimately lives: a product, a library, or a published prompt standard** — needed before Phase 7
