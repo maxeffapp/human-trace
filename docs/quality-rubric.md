@@ -98,9 +98,9 @@ Each pair shows one failure mode and its repair. The subjects are chosen because
 Four facts, no story, and the last sentence is a claim so broad it carries no information. It also happens to be wrong about what Gutenberg invented.
 
 > ✅ **Good**
-> The technique Gutenberg is remembered for — casting individual letters in metal and setting them into a page — was not the first movable type; printers in China and Korea had been working with it for centuries before Mainz. What was new was the combination: an alloy that cast cleanly, a hand mould that turned out identical letters quickly, and an ink that would hold to metal. Gutenberg borrowed heavily to build it, and lost the workshop to his financier in a lawsuit shortly after the Bible was finished.
+> The technique Gutenberg is remembered for — casting individual letters in metal and setting them into a page — was not the first movable type; printers in China and Korea had been working with it for centuries, and the oldest surviving book printed from metal type was made in Korea seventy-eight years before Gutenberg's Bible. What was new in Mainz was the combination: an alloy that cast cleanly, a hand mould that turned out identical letters quickly, and an ink that would hold to metal. Gutenberg borrowed heavily to build it, and in 1455 the financier who had lent him the money took him to court.
 
-The correction is made by stating what actually happened, not by scolding the reader.
+The correction is made by stating what actually happened, not by scolding the reader. Note what the last clause does *not* say: the familiar ending has Gutenberg losing his workshop to Fust, and the surviving court record does not establish it. Worked out in full in [`examples/printing-press.md`](../examples/printing-press.md).
 
 ### 3.2 False hero → collective and contested
 
