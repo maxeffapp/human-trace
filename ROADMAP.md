@@ -23,7 +23,7 @@ Execution plan for Human Trace. The [README](README.md) describes *what* the pro
 * [x] Add the MIT license
 * [x] Write the repository description
 * [ ] Add repository topics
-* [ ] Create the `examples/` directory structure
+* [x] Create the `examples/` directory structure
 
 **Exit criteria:** anyone landing on the repository understands the idea and knows what they may do with it. ✅
 
@@ -37,12 +37,12 @@ Everything in this phase is written by hand. No model is asked to generate a Hum
 
 ### 1.1 Define the quality bar
 
-* [ ] Write `docs/quality-rubric.md`
-* [ ] Define what makes a **good** Human Trace: grounded, specific, restrained, connected to the question
-* [ ] Define what makes a **bad** Human Trace: encyclopedic, dramatized, hero-centric, generic, tacked on
-* [ ] Write 3 side-by-side bad/good rewrites showing the difference
-* [ ] Fix the length limits: Trace 2–5 sentences, Story 250–500 words, Deep Story unbounded
-* [ ] Define the tone rules concretely enough that two different writers produce comparable output
+* [x] Write `docs/quality-rubric.md`
+* [x] Define what makes a **good** Human Trace: grounded, specific, restrained, connected to the question
+* [x] Define what makes a **bad** Human Trace: encyclopedic, dramatized, hero-centric, generic, tacked on
+* [x] Write 3 side-by-side bad/good rewrites showing the difference
+* [x] Fix the length limits: Trace 2–5 sentences, Story 250–500 words, Deep Story unbounded
+* [x] Define the tone rules concretely enough that two different writers produce comparable output
 
 ### 1.2 Select the subjects
 
