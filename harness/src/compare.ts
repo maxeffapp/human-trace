@@ -2,13 +2,13 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { CaseResult } from "./types";
 
-interface HumanScore {
+export interface HumanScore {
   slug: string;
   trace: boolean | null;
   rating: string | null;
 }
 
-function parseWorksheet(markdown: string): HumanScore[] {
+export function parseWorksheet(markdown: string): HumanScore[] {
   const scores: HumanScore[] = [];
   for (const [, body] of markdown.matchAll(/```scoring\n([\s\S]*?)```/g)) {
     const fields = new Map<string, string>();
@@ -104,4 +104,5 @@ function main() {
   }
 }
 
-main();
+// Only run as a CLI, so tests can import parseWorksheet without executing it.
+if (process.argv[1]?.endsWith("compare.ts")) main();

@@ -18,9 +18,20 @@ npm run eval                      # all 40 cases at effort high
 npm run eval -- --effort medium   # low | medium | high | xhigh | max
 npm run eval -- --only compass    # filter cases by slug substring
 npm run eval -- --model <id>      # override the model under test
+npm run eval -- --prompt <path>   # run a prompt variant without committing it
 ```
 
-Each run writes to `runs/<timestamp>-<effort>/`: one JSON file per case, a `summary.json`, and a blank `worksheet.md`.
+Each run writes to `runs/<timestamp>-<effort>/`: one JSON file per case, a `summary.json`, a blank `worksheet.md`, and copies of the exact `prompt.md` and `rubric.md` it was produced from. A result stays interpretable after the prompt has moved on, which is what makes prompt iteration measurable rather than anecdotal — git holds the history, and each run holds the version it used.
+
+## Tests
+
+```bash
+npm test
+```
+
+Covers the markdown parsing on both sides — the example-file reader and the worksheet reader — and asserts the gold set still loads as 25 positive and 15 negative cases with no empty questions and no duplicate slugs. A malformed example file fails the test rather than silently dropping a case.
+
+The section reader has a regression test for a specific bug: an earlier regex version terminated on the blank line after a heading and returned an empty string, which the loader read as "heading missing." Typechecking did not catch it.
 
 ## How it works
 

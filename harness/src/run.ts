@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { generate, judge } from "./anthropic";
 import { loadCases } from "./cases";
@@ -150,10 +150,9 @@ async function main() {
   }
   const only = flag("only");
 
-  const systemPrompt = readFileSync(
-    join(REPO_ROOT, "prompts", "human-trace-system-prompt.md"),
-    "utf8",
-  );
+  const promptPath =
+    flag("prompt") ?? join(REPO_ROOT, "prompts", "human-trace-system-prompt.md");
+  const systemPrompt = readFileSync(promptPath, "utf8");
   const rubric = readFileSync(join(REPO_ROOT, "docs", "quality-rubric.md"), "utf8");
   const promptHash = createHash("sha256").update(systemPrompt).digest("hex").slice(0, 8);
 
@@ -168,6 +167,11 @@ async function main() {
     `${new Date().toISOString().replace(/[:.]/g, "-")}-${effort}`,
   );
   mkdirSync(runDir, { recursive: true });
+
+  // Every run carries the exact inputs it was produced from, so a result stays interpretable
+  // after the prompt or the rubric has moved on.
+  writeFileSync(join(runDir, "prompt.md"), systemPrompt);
+  writeFileSync(join(runDir, "rubric.md"), rubric);
 
   console.log(`model ${model} · effort ${effort} · prompt ${promptHash} · ${cases.length} cases`);
   console.log(`→ ${runDir}\n`);
@@ -198,7 +202,14 @@ async function main() {
     writeFileSync(join(runDir, `${result.slug}.json`), JSON.stringify(result, null, 2));
   }
 
-  const summary = { model, effort, promptHash, caseCount: cases.length, ...summarize(results) };
+  const summary = {
+    model,
+    effort,
+    promptPath: relative(REPO_ROOT, promptPath),
+    promptHash,
+    caseCount: cases.length,
+    ...summarize(results),
+  };
   writeFileSync(join(runDir, "summary.json"), JSON.stringify(summary, null, 2));
   writeFileSync(join(runDir, "worksheet.md"), worksheet(results));
 

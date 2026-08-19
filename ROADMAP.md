@@ -137,7 +137,7 @@ This is the phase working as intended. All three would have passed a casual read
 
 * [ ] Fix the worst failure mode, rerun the full set, compare
 * [ ] Repeat until the scores stop improving
-* [ ] Keep every prompt version — a change that fixes one case usually breaks another
+* [x] Keep every prompt version — a change that fixes one case usually breaks another. *Mechanism: git holds the history of `prompts/`, every run directory carries a copy of the exact prompt and rubric it used, and `--prompt <path>` runs a variant without committing it.*
 
 **Exit criteria:** the prototype produces a Trace judged acceptable on most positive subjects and stays silent on the negative set. Both numbers are written down.
 
@@ -260,6 +260,7 @@ Deliberately unresolved. Each needs an owner's call before the phase that depend
 
 * ~~**Implementation language and runtime**~~ — resolved: TypeScript on Node (Phase 2 § Decisions)
 * ~~**Model choice**~~ — resolved: `claude-opus-5` (Phase 2 § Decisions)
+* **How a Trace is delimited in the output** — needed for Phase 5, and deliberately *not* before then. The system prompt produces natural prose with no machine-readable boundary between the answer and the Trace, so nothing downstream can collapse one without the other. A product needs that boundary. Introducing it now would change the artifact Phase 2 is measuring, so the baseline has to be taken on the prompt exactly as it stands.
 * **Retrieval approach: live search or a curated corpus** — needed for Phase 4
 * **Demo surface: web, browser extension, or API** — needed for Phase 5
 * **Where the layer ultimately lives: a product, a library, or a published prompt standard** — needed before Phase 7

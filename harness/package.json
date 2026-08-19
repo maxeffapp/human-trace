@@ -6,7 +6,8 @@
   "scripts": {
     "eval": "tsx src/run.ts",
     "typecheck": "tsc --noEmit",
-    "compare": "tsx src/compare.ts"
+    "compare": "tsx src/compare.ts",
+    "test": "tsx --test src/*.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.118.0",
