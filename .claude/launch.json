@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "human-trace-app",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd app && HUMAN_TRACE_PREVIEW=1 pnpm dev --port 5173 --strictPort"],
+      "port": 5173
+    }
+  ]
+}

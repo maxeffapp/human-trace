@@ -59,13 +59,25 @@ Each phase ends with a committed artifact and measurable exit criteria.
 
 **Goal:** learn whether the dynamic system is accurate, restrained and worth using.
 
-- [ ] Create a fixed, category-balanced question set; do not write target stories
-- [ ] Include science, engineering, art, philosophy, cultural knowledge, collective work and exploitation cases
-- [ ] Create a negative set where Human Trace should remain silent
+- [x] Create a fixed, category-balanced question set; do not write target stories
+- [x] Include science, engineering, art, philosophy, cultural knowledge, collective work and exploitation cases
+- [x] Create a negative set where Human Trace should remain silent
 - [ ] Grade every live output for relevance, factual support, restraint, collective attribution and usefulness
 - [ ] Track trigger rate, false-positive rate and source-support rate
 - [ ] Save failed generated outputs as regression cases
 - [ ] Compare `Katkılar` and `İz Akışı` for comprehension and preference
+
+**Existing evaluation assets.** The question set already exists: 25 subjects in `examples/` and 15 silent cases in `examples/negative/`, indexed in [`examples/README.md`](examples/README.md), covering all seven required categories including an exploitation case. Grading criteria are in [`docs/quality-rubric.md`](docs/quality-rubric.md), which names six failure modes and gives a nine-step reviewer checklist.
+
+Six of the negative cases are deliberate near-neighbours of positive subjects — a flickering bulb against the light-bulb story, a dying sourdough starter against fermentation, a phone-compass calibration against Shen Kuo. Silence is hardest where a real story exists but is irrelevant to what was asked.
+
+**Open conflict.** Those files also contain hand-written Traces, Stories and sources, written before this roadmap set the operating rule. Under the current rule they cannot serve as target output. Three options, needing a decision before grading starts:
+
+1. Keep them as a *reference standard* for graders, clearly marked as not-to-be-reproduced.
+2. Strip the files down to question, category and grading notes.
+3. Keep them as a held-out human baseline: grade live engine output and the hand-written version blind, and see which readers prefer.
+
+Option 3 costs nothing extra and answers a question the roadmap does not currently ask — whether the live engine reaches the standard a careful human reached with the same brief.
 
 **Exit criteria:** evaluation results and failure modes are published with enough evidence to decide what must improve before distribution.
 
