@@ -73,8 +73,8 @@ Added after a provider swap exposed the engine's dependence on one vendor's cita
 - [x] Include science, engineering, art, philosophy, cultural knowledge, collective work and exploitation cases
 - [x] Create a negative set where Human Trace should remain silent
 - [ ] Grade every live output for relevance, factual support, restraint, collective attribution and usefulness
-- [ ] Track trigger rate, false-positive rate and source-support rate
-- [ ] Save failed generated outputs as regression cases
+- [x] Track trigger rate, false-positive rate and source-support rate — *`pnpm evaluate` produces all three from the gold set; first partial run in [`docs/evaluation-01.md`](docs/evaluation-01.md)*
+- [x] Save failed generated outputs as regression cases — *first one recorded in `examples/negative/python-indentation-error.md`*
 - [ ] Compare `Katkılar` and `İz Akışı` for comprehension and preference
 
 **Existing evaluation assets.** The question set already exists: 25 subjects in `examples/` and 15 silent cases in `examples/negative/`, indexed in [`examples/README.md`](examples/README.md), covering all seven required categories including an exploitation case. Grading criteria are in [`docs/quality-rubric.md`](docs/quality-rubric.md), which names six failure modes and gives a nine-step reviewer checklist.

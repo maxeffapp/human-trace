@@ -55,6 +55,9 @@ export const publicTraceSchema = generatedTraceSchema
       model: z.string(),
       researchedAt: z.string(),
       liveSearch: z.boolean(),
+      contributorsProposed: z.number(),
+      contributorsKept: z.number(),
+      sourcesSearched: z.number(),
     }),
   });
 
@@ -156,7 +159,12 @@ export function normalizeWithSources(parsed, searchedSources, model) {
     meta: {
       model,
       researchedAt: new Date().toISOString(),
-      liveSearch: true,
+      liveSearch: searchedSources.size > 0,
+      // How many contributors the model offered versus how many had real source backing.
+      // The gap is the fabrication rate, and it is the number worth watching.
+      contributorsProposed: parsed.contributors.length,
+      contributorsKept: contributors.length,
+      sourcesSearched: searchedSources.size,
     },
   });
 }

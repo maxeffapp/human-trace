@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "check:provider": "node --env-file=.env scripts/check-provider.mjs",
-    "check:gemini": "node --env-file=.env scripts/check-gemini.mjs"
+    "check:gemini": "node --env-file=.env scripts/check-gemini.mjs",
+    "evaluate": "node --env-file=.env scripts/evaluate.mjs"
   },
   "dependencies": {
     "@fontsource/manrope": "^5.2.8",

@@ -73,6 +73,10 @@ describe("Human Trace source normalization", () => {
   });
 });
 
+const sourcesForMeta = new Map([
+  ["https://example.com/source", { url: "https://example.com/source/", title: "Verified source" }],
+]);
+
 describe("verification against a caller-supplied source map", () => {
   // The Gemini path searches separately and passes its own results in, so this is the
   // code path every Gemini trace goes through.
@@ -97,5 +101,20 @@ describe("verification against a caller-supplied source map", () => {
     const result = normalizeWithSources(parsed, sources, "test-model");
     expect(result.contributors[0]).not.toHaveProperty("sourceUrls");
     expect(result.contributors[0].sourceIds).toEqual(["source-1"]);
+  });
+});
+
+describe("verification is measurable", () => {
+  it("reports how many contributors were offered and how many survived", () => {
+    const result = normalizeWithSources(parsed, sourcesForMeta, "test-model");
+    expect(result.meta.contributorsProposed).toBe(2);
+    expect(result.meta.contributorsKept).toBe(1);
+    expect(result.meta.sourcesSearched).toBe(1);
+  });
+
+  it("reports no live search when nothing was searched", () => {
+    const result = normalizeWithSources(parsed, new Map(), "test-model");
+    expect(result.meta.liveSearch).toBe(false);
+    expect(result.meta.contributorsKept).toBe(0);
   });
 });
