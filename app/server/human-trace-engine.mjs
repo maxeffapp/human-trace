@@ -1,9 +1,8 @@
 import { readFile } from "node:fs/promises";
-import OpenAI from "openai";
-import { zodTextFormat } from "openai/helpers/zod";
 import { generatedTraceSchema, normalizeTraceResult } from "./trace-schema.mjs";
 import { GeminiConfigurationError, generateWithGemini } from "./gemini-engine.mjs";
 import { SearchConfigurationError } from "./search-exa.mjs";
+import { readEnv } from "./env.mjs";
 
 const basePromptUrl = new URL("../../prompts/human-trace-system-prompt.md", import.meta.url);
 
@@ -19,9 +18,9 @@ export class HumanTraceConfigurationError extends Error {
  * searches inside its own call. `HUMAN_TRACE_PROVIDER` forces one explicitly.
  */
 function selectProvider() {
-  const forced = process.env.HUMAN_TRACE_PROVIDER;
+  const forced = readEnv("HUMAN_TRACE_PROVIDER");
   if (forced) return forced;
-  return process.env.GEMINI_API_KEY && process.env.EXA_API_KEY ? "gemini" : "openai";
+  return readEnv("GEMINI_API_KEY") && readEnv("EXA_API_KEY") ? "gemini" : "openai";
 }
 
 export async function generateHumanTrace(question, options = {}) {
@@ -43,12 +42,12 @@ export async function generateHumanTrace(question, options = {}) {
 }
 
 async function generateWithOpenAI(question, options = {}) {
-  const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
-  const model = options.model ?? process.env.OPENAI_MODEL ?? "gpt-5.5";
+  const apiKey = options.apiKey ?? readEnv("OPENAI_API_KEY");
+  const model = options.model ?? readEnv("OPENAI_MODEL") ?? "gpt-5.5";
   // Set OPENAI_BASE_URL to route through an OpenAI-compatible gateway such as OpenRouter.
   // Leave it unset for OpenAI itself. See docs/providers.md before switching: hosted web
   // search and citation shapes differ between providers, and a mismatch silently yields no trace.
-  const baseURL = options.baseURL ?? process.env.OPENAI_BASE_URL ?? undefined;
+  const baseURL = options.baseURL ?? readEnv("OPENAI_BASE_URL");
 
   if (!apiKey) {
     throw new HumanTraceConfigurationError(
@@ -61,6 +60,11 @@ async function generateWithOpenAI(question, options = {}) {
   if (cleanQuestion.length > 2000) throw new RangeError("Soru 2000 karakterden kısa olmalı.");
 
   const basePrompt = await readFile(basePromptUrl, "utf8");
+  // Imported here rather than at module scope so the Gemini path does not need the SDK.
+  const [{ default: OpenAI }, { zodTextFormat }] = await Promise.all([
+    import("openai"),
+    import("openai/helpers/zod"),
+  ]);
   const client = options.client ?? new OpenAI({ apiKey, baseURL });
 
   const response = await client.responses.parse({

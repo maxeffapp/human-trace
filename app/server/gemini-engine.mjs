@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { GoogleGenAI } from "@google/genai";
+import { readEnv } from "./env.mjs";
 import { searchWeb } from "./search-exa.mjs";
 import { entityTypes, normalizeWithSources, normalizeUrl } from "./trace-schema.mjs";
 
@@ -123,14 +124,14 @@ async function generateJson(ai, model, system, user, schema) {
  * the first call and costs no search at all.
  */
 export async function generateWithGemini(question, options = {}) {
-  const apiKey = options.apiKey ?? process.env.GEMINI_API_KEY;
+  const apiKey = options.apiKey ?? readEnv("GEMINI_API_KEY");
   if (!apiKey) {
     throw new GeminiConfigurationError(
       "GEMINI_API_KEY tanımlı değil. Canlı Human Trace üretimi için sunucu ortamına bir API anahtarı ekleyin.",
     );
   }
 
-  const model = options.model ?? process.env.GEMINI_MODEL ?? DEFAULT_MODEL;
+  const model = options.model ?? readEnv("GEMINI_MODEL") ?? DEFAULT_MODEL;
   const basePrompt = await readFile(basePromptUrl, "utf8");
   const ai = options.client ?? new GoogleGenAI({ apiKey });
 

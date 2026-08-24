@@ -1,3 +1,5 @@
+import { readEnv } from "./env.mjs";
+
 const ENDPOINT = "https://api.exa.ai/search";
 const MAX_QUERIES = 4;
 const RESULTS_PER_QUERY = 5;
@@ -18,7 +20,7 @@ export class SearchConfigurationError extends Error {
  * shape its citations. See docs/providers.md for what that dependency cost us.
  */
 export async function searchWeb(queries, options = {}) {
-  const apiKey = options.apiKey ?? process.env.EXA_API_KEY;
+  const apiKey = options.apiKey ?? readEnv("EXA_API_KEY");
   if (!apiKey) {
     throw new SearchConfigurationError(
       "EXA_API_KEY tanımlı değil. Canlı araştırma için sunucu ortamına bir arama anahtarı ekleyin.",
