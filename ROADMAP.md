@@ -60,7 +60,7 @@ Added after a provider swap exposed the engine's dependence on one vendor's cita
 - [x] Validate and normalize the model response at the provider boundary
 - [x] Add schema normalization tests
 - [ ] Add integration tests with recorded provider responses
-- [ ] Add retry, timeout and rate-limit behavior — *retry with backoff on 5xx is in place; timeout and rate-limit handling are not*
+- [ ] Add retry, timeout and rate-limit behavior — *retry with backoff is in place for 5xx and for rate limits; request timeouts are not*
 - [ ] Add source-domain quality rules and disputed-claim handling
 
 **Exit criteria:** an arbitrary question can produce a complete answer and, when justified, a source-supported trace in both interface modes. The application builds and its core interactions pass. The remaining claim-level verification work is explicit rather than hidden.

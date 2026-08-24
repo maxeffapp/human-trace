@@ -85,16 +85,31 @@ You are given an answer and a set of web search results. Identify the human cont
 - If the results do not support any contribution, return an empty contributors array and an empty acknowledgement.
 `;
 
-/** Gemini returns 503 under load; a short backoff costs less than failing the request. */
-async function withRetry(operation, attempts = 3) {
-  for (let attempt = 1; ; attempt += 1) {
+/**
+ * Retry the two transient failures this API actually produces.
+ *
+ * 503 is load and clears in a moment. 429 is a rate limit, and on the free tier it is
+ * usually the per-minute one rather than the daily one — measured: two models that were
+ * refusing recovered within twenty minutes, well before the daily reset at midnight
+ * Pacific. So a 429 is worth waiting out, but on a much longer scale than a 503.
+ */
+const BACKOFF_MS = { server: [400, 800, 1600], rate: [20_000, 45_000, 90_000] };
+
+async function withRetry(operation) {
+  for (let attempt = 0; ; attempt += 1) {
     try {
       return await operation();
     } catch (error) {
-      const status = error?.status ?? Number(/\b(\d{3})\b/.exec(error?.message ?? "")?.[1]);
-      const retriable = status >= 500 && status < 600;
-      if (!retriable || attempt >= attempts) throw error;
-      await new Promise((resolve) => setTimeout(resolve, 400 * 2 ** (attempt - 1)));
+      const message = error?.message ?? "";
+      const status = error?.status ?? Number(/\b(\d{3})\b/.exec(message)?.[1]);
+      const kind = status === 429 || message.includes("RESOURCE_EXHAUSTED")
+        ? "rate"
+        : status >= 500 && status < 600
+          ? "server"
+          : null;
+      const wait = kind ? BACKOFF_MS[kind][attempt] : undefined;
+      if (wait === undefined) throw error;
+      await new Promise((resolve) => setTimeout(resolve, wait));
     }
   }
 }

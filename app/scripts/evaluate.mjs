@@ -68,7 +68,9 @@ if (only) cases = cases.filter((c) => c.slug.includes(only));
 const limit = Number(flag("limit", 0));
 if (limit > 0) cases = cases.slice(0, limit);
 
-const concurrency = Number(flag("concurrency", 3));
+// Pace requests: the per-minute limit is the binding one, and losing a run to it
+// costs far more than finishing slowly.
+const concurrency = Number(flag("concurrency", 1));
 const resume = flag("resume");
 const runDir = resume
   ? resolve(REPO_ROOT, "app", resume.replace(/^app\//, ""))
@@ -115,9 +117,11 @@ const fresh = await pool(pending, concurrency, async (testCase) => {
   } catch (error) {
     const message = String(error?.message ?? error);
     if (message.includes("429") || message.includes("RESOURCE_EXHAUSTED")) {
+      // The engine already waited this out through several backoffs. Still refusing means
+      // the daily limit, not the per-minute one, and no amount of waiting inside this run helps.
       if (!quotaExhausted) {
         quotaExhausted = true;
-        console.log(`\n  quota reached at ${testCase.slug} — stopping.`);
+        console.log(`\n  rate limit persisted through backoff at ${testCase.slug} — stopping.`);
         console.log(`  resume later with: --resume evaluations/${runDir.split("/").pop()}\n`);
       }
       return { ...testCase, skipped: true };

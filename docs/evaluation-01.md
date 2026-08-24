@@ -1,23 +1,25 @@
 # Evaluation 01 — partial
 
-Two live runs of the gold set against the engine, on two models. **Neither completed: 5 of 40 and 6 of 40.** Both stopped on the same wall — the Gemini free tier will not carry a batch evaluation.
+Live runs of the gold set against the engine. The first two stopped early on a rate limit that was initially misdiagnosed; see below. Partial numbers are recorded so they are not mistaken for final ones.
 
-Recorded so the partial numbers are not mistaken for final ones.
+## What actually stopped the runs
 
-## The free tier cannot run this evaluation
-
-Measured twice, on two models, within half an hour of each other.
+Both runs stopped on a `429`, and the first reading of that was wrong. It was recorded here as "the free tier cannot run this evaluation." It can — not at speed.
 
 | Run | Model | Completed | Stopped at |
 |---|---|---|---|
 | 1 | `gemini-3.6-flash` | 5 / 40 | `beethovens-ninth` |
 | 2 | `gemini-3.5-flash` | 6 / 40 | `eniac-programmers` |
 
-Quota is per-model: when `3.6-flash` began refusing, `3.5-flash` answered in the same second. Each model gives roughly five or six cases before it stops. Forty cases needs about sixty-five model calls.
+Gemini measures three limits independently — requests per minute, input tokens per minute, and requests per day — and any one of them returns the same `429` with no indication of which. Daily quotas reset at midnight Pacific.
 
-Gemini measures three limits independently — requests per minute, input tokens per minute, and requests per day — and any one of them returns the same `429`. Which one binds here is not visible from the error, and Google does not publish free-tier numbers; they are shown in the AI Studio dashboard. That matters, because it decides whether trimming the injected search text would buy more cases per run or none.
+Twenty minutes after both models had been refusing, both answered again. The clock read 09:22 Pacific, so the daily quota had not reset. **The binding limit was per-minute, not per-day.** Two runs' worth of evidence for "the free tier is too small" was really evidence for "four concurrent requests is too fast."
 
-Exa is not the constraint. Each traced case searches four queries and receives fourteen to twenty sources, so eleven traced cases spent roughly forty-four of twenty thousand monthly requests.
+Quota is also per-model: while `3.6-flash` was refusing, `3.5-flash` answered in the same second. That remains true and is useful, but it is a way to go faster, not a way around a daily cap that was never the problem.
+
+The engine now treats `429` as transient and waits it out — twenty seconds, then forty-five, then ninety — and the evaluation runner defaults to one request at a time. A refusal that survives all three backoffs is taken as the daily limit, which no amount of waiting inside a single run will clear.
+
+Exa was never the constraint. Each traced case searches four queries and receives fourteen to twenty sources, so eleven traced cases spent roughly forty-four of twenty thousand monthly requests.
 
 ## Setup
 
@@ -81,11 +83,7 @@ Splitting them — a decision stage that can be evaluated and tuned on its own, 
 
 Eleven case-results across two models is not a measurement, and the two runs are not comparable to each other. What they do establish is that this evaluation cannot be completed on the free tier in one sitting, and that spreading it across models would trade the quota problem for a comparability problem.
 
-Three ways forward, in order of what they cost:
-
-1. **Spread across days on one model.** Free, roughly a week, and the result is a single-model run that means something.
-2. **Find out which limit binds** at [ai.dev/rate-limit](https://ai.dev/rate-limit). If it is tokens per minute, cutting the injected search text — currently up to twenty results at 1,200 characters each — could buy more cases per run at some cost to grounding quality. If it is requests per day, nothing about the payload helps.
-3. **Pay for one run.** A complete forty-case pass is a few dollars and removes the constraint entirely.
+The constraint turned out to be pace rather than allowance, so the run is being completed on the free tier at one request at a time. If a genuine daily limit is reached, the run resumes the next day into the same directory.
 
 ## Resuming
 
