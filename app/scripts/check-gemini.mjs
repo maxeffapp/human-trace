@@ -21,9 +21,20 @@ let model = process.env.GEMINI_MODEL;
 if (!model) {
   const names = [];
   for await (const m of await ai.models.list()) names.push(m.name?.replace(/^models\//, ""));
-  const flash = names.filter((n) => n?.includes("flash") && !n.includes("image") && !n.includes("tts"));
-  model = flash[0] ?? names[0];
-  console.log(`available flash models: ${flash.slice(0, 6).join(", ") || "(none)"}`);
+
+  // Older Gemini versions are withdrawn from new accounts, so pick the highest
+  // numbered stable flash model rather than the first one the list happens to return.
+  const scored = names
+    .map((name) => {
+      const match = /^gemini-(\d+(?:\.\d+)?)-flash$/.exec(name ?? "");
+      if (!match) return null;
+      return { name, version: Number(match[1]) };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.version - a.version);
+
+  model = scored[0]?.name ?? names.find((n) => n === "gemini-flash-latest") ?? names[0];
+  console.log(`stable flash models: ${scored.map((s) => s.name).join(", ") || "(none)"}`);
   console.log(`using: ${model}\n`);
 }
 

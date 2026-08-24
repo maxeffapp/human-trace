@@ -57,6 +57,34 @@ OpenRouter's documented citation path is its `web` plugin on the **Chat Completi
 
 Note also that credits are consumed per request, and the hosted search is billed on top of tokens. An account with a near-zero balance fails with `402` and a message naming the affordable token count, which is easy to mistake for a request-shape problem.
 
+## Gemini (Google AI Studio)
+
+**Measured on 21 August 2026 on a free-tier key, against `gemini-3.6-flash` and `gemini-3.5-flash`.**
+
+| | |
+|---|---|
+| Authentication | accepted |
+| Text generation | works |
+| `responseSchema` structured output | works — returns valid JSON against the schema |
+| **`tools: [{ googleSearch: {} }]`** | **`429 RESOURCE_EXHAUSTED` on every attempt** |
+
+The error names no specific quota metric, only `RESOURCE_EXHAUSTED` with a link to the rate-limit docs. Plain generation on the same key and the same model succeeds in the same second, so this is a grounding-specific limit rather than a general rate limit.
+
+Two things follow. The model and the structured-output half of the engine are usable on the free tier. The research half is not.
+
+Model selection matters here: `gemini-2.5-flash` returns `404 … no longer available to new users`. `scripts/check-gemini.mjs` therefore picks the highest-numbered stable `gemini-N-flash` rather than the first entry the list returns, and `gemini-3.7-flash` intermittently returns `503` under load.
+
+## The pattern across providers
+
+Two providers, two different walls, one shape:
+
+* OpenRouter runs the search and returns no source URLs.
+* Gemini's free tier returns source URLs in principle but will not run the search.
+
+Live web search that hands back its sources is the billed part almost everywhere. This engine's architecture depends on exactly that, so there is no free path while the provider owns the search step.
+
+The alternative is to own it: call a dedicated search API, pass the results into the model, and let the verifier read the URLs from our own search rather than from the provider's citations. That removes the dependency on citation shapes entirely and is the only combination that is free at development scale.
+
 ## Before trusting a provider
 
 ```bash
