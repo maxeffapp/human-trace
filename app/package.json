@@ -9,11 +9,13 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:sites": "node --test tests/sites-worker.test.mjs",
-    "check:provider": "node --env-file=.env scripts/check-provider.mjs"
+    "check:provider": "node --env-file=.env scripts/check-provider.mjs",
+    "check:gemini": "node --env-file=.env scripts/check-gemini.mjs"
   },
   "dependencies": {
     "@fontsource/manrope": "^5.2.8",
     "@fontsource/newsreader": "^5.2.8",
+    "@google/genai": "^2.18.0",
     "@phosphor-icons/react": "^2.1.10",
     "@vitejs/plugin-react": "5.0.4",
     "openai": "^5.23.2",
