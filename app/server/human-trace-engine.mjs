@@ -2,6 +2,8 @@ import { readFile } from "node:fs/promises";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import { generatedTraceSchema, normalizeTraceResult } from "./trace-schema.mjs";
+import { GeminiConfigurationError, generateWithGemini } from "./gemini-engine.mjs";
+import { SearchConfigurationError } from "./search-exa.mjs";
 
 const basePromptUrl = new URL("../../prompts/human-trace-system-prompt.md", import.meta.url);
 
@@ -12,7 +14,35 @@ export class HumanTraceConfigurationError extends Error {
   }
 }
 
+/**
+ * Pick the provider. Gemini runs a separate search step, so it needs both keys; OpenAI
+ * searches inside its own call. `HUMAN_TRACE_PROVIDER` forces one explicitly.
+ */
+function selectProvider() {
+  const forced = process.env.HUMAN_TRACE_PROVIDER;
+  if (forced) return forced;
+  return process.env.GEMINI_API_KEY && process.env.EXA_API_KEY ? "gemini" : "openai";
+}
+
 export async function generateHumanTrace(question, options = {}) {
+  const provider = options.provider ?? selectProvider();
+
+  if (provider === "gemini") {
+    try {
+      return await generateWithGemini(question, options);
+    } catch (error) {
+      // Keep one configuration-error type so the API boundary answers 503 either way.
+      if (error instanceof GeminiConfigurationError || error instanceof SearchConfigurationError) {
+        throw new HumanTraceConfigurationError(error.message);
+      }
+      throw error;
+    }
+  }
+
+  return generateWithOpenAI(question, options);
+}
+
+async function generateWithOpenAI(question, options = {}) {
   const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
   const model = options.model ?? process.env.OPENAI_MODEL ?? "gpt-5.5";
   // Set OPENAI_BASE_URL to route through an OpenAI-compatible gateway such as OpenRouter.

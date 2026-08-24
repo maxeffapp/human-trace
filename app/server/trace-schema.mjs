@@ -101,8 +101,15 @@ export function collectSearchSources(response) {
   return byUrl;
 }
 
-export function normalizeTraceResult(parsed, response, model) {
-  const searchedSources = collectSearchSources(response);
+/**
+ * Verify a generated trace against the sources a search run actually returned.
+ *
+ * `searchedSources` is a Map of normalized URL -> { url, title }. Where it comes from is
+ * the provider's business: an OpenAI response carries its own citations, while the
+ * Gemini path searches separately and passes its own results in. Either way a contributor
+ * survives only if its URLs are in that map.
+ */
+export function normalizeWithSources(parsed, searchedSources, model) {
   const usedSources = new Map();
   const knownParagraphIds = new Set(parsed.answer.map((paragraph) => paragraph.id));
 
@@ -152,4 +159,9 @@ export function normalizeTraceResult(parsed, response, model) {
       liveSearch: true,
     },
   });
+}
+
+/** Provider responses that carry their own citations (OpenAI Responses API). */
+export function normalizeTraceResult(parsed, response, model) {
+  return normalizeWithSources(parsed, collectSearchSources(response), model);
 }

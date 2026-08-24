@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { collectSearchSources, normalizeTraceResult } from "./trace-schema.mjs";
+import { collectSearchSources, normalizeTraceResult, normalizeWithSources } from "./trace-schema.mjs";
 
 const parsed = {
   language: "tr",
@@ -70,5 +70,32 @@ describe("Human Trace source normalization", () => {
     expect(result.traceStatus).toBe("none");
     expect(result.contributors).toEqual([]);
     expect(result.acknowledgement).toBe("");
+  });
+});
+
+describe("verification against a caller-supplied source map", () => {
+  // The Gemini path searches separately and passes its own results in, so this is the
+  // code path every Gemini trace goes through.
+  const sources = new Map([
+    ["https://example.com/source", { url: "https://example.com/source/", title: "Verified source" }],
+  ]);
+
+  it("keeps contributors whose URLs came from the caller's search", () => {
+    const result = normalizeWithSources(parsed, sources, "test-model");
+    expect(result.contributors.map((c) => c.id)).toEqual(["supported"]);
+    expect(result.sources[0].title).toBe("Verified source");
+  });
+
+  it("drops everything when the search returned nothing", () => {
+    const result = normalizeWithSources(parsed, new Map(), "test-model");
+    expect(result.traceStatus).toBe("none");
+    expect(result.contributors).toEqual([]);
+    expect(result.acknowledgement).toBe("");
+  });
+
+  it("never exposes raw contributor URLs to the client", () => {
+    const result = normalizeWithSources(parsed, sources, "test-model");
+    expect(result.contributors[0]).not.toHaveProperty("sourceUrls");
+    expect(result.contributors[0].sourceIds).toEqual(["source-1"]);
   });
 });
