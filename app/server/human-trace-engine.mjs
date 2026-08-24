@@ -15,6 +15,10 @@ export class HumanTraceConfigurationError extends Error {
 export async function generateHumanTrace(question, options = {}) {
   const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
   const model = options.model ?? process.env.OPENAI_MODEL ?? "gpt-5.5";
+  // Set OPENAI_BASE_URL to route through an OpenAI-compatible gateway such as OpenRouter.
+  // Leave it unset for OpenAI itself. See docs/providers.md before switching: hosted web
+  // search and citation shapes differ between providers, and a mismatch silently yields no trace.
+  const baseURL = options.baseURL ?? process.env.OPENAI_BASE_URL ?? undefined;
 
   if (!apiKey) {
     throw new HumanTraceConfigurationError(
@@ -27,7 +31,7 @@ export async function generateHumanTrace(question, options = {}) {
   if (cleanQuestion.length > 2000) throw new RangeError("Soru 2000 karakterden kısa olmalı.");
 
   const basePrompt = await readFile(basePromptUrl, "utf8");
-  const client = options.client ?? new OpenAI({ apiKey });
+  const client = options.client ?? new OpenAI({ apiKey, baseURL });
 
   const response = await client.responses.parse({
     model,
