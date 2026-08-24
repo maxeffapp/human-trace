@@ -88,12 +88,16 @@ You are given an answer and a set of web search results. Identify the human cont
 /**
  * Retry the two transient failures this API actually produces.
  *
- * 503 is load and clears in a moment. 429 is a rate limit, and on the free tier it is
- * usually the per-minute one rather than the daily one — measured: two models that were
- * refusing recovered within twenty minutes, well before the daily reset at midnight
- * Pacific. So a 429 is worth waiting out, but on a much longer scale than a 503.
+ * 503 is load and clears in a moment. 429 is a rate limit, and on this account it recovers
+ * on a scale of tens of minutes rather than seconds — measured: models that refused for
+ * over two minutes of backoff answered again roughly twenty minutes later, well before the
+ * daily reset at midnight Pacific. Which of the three published limits that is, the error
+ * does not say. The waits below are sized to the observed recovery, not to a theory about it.
  */
-const BACKOFF_MS = { server: [400, 800, 1600], rate: [20_000, 45_000, 90_000] };
+const BACKOFF_MS = {
+  server: [400, 800, 1600],
+  rate: [60_000, 300_000, 900_000],
+};
 
 async function withRetry(operation) {
   for (let attempt = 0; ; attempt += 1) {

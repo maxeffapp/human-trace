@@ -13,11 +13,13 @@ Both runs stopped on a `429`, and the first reading of that was wrong. It was re
 
 Gemini measures three limits independently — requests per minute, input tokens per minute, and requests per day — and any one of them returns the same `429` with no indication of which. Daily quotas reset at midnight Pacific.
 
-Twenty minutes after both models had been refusing, both answered again. The clock read 09:22 Pacific, so the daily quota had not reset. **The binding limit was per-minute, not per-day.** Two runs' worth of evidence for "the free tier is too small" was really evidence for "four concurrent requests is too fast."
+Twenty minutes after both models had been refusing, both answered again. The clock read 09:22 Pacific, so the daily quota had not reset — whatever bound the run recovers on its own.
 
-Quota is also per-model: while `3.6-flash` was refusing, `3.5-flash` answered in the same second. That remains true and is useful, but it is a way to go faster, not a way around a daily cap that was never the problem.
+A second correction followed. Reading that as a per-minute limit, the engine was given backoffs of twenty, forty-five and ninety seconds. It carried two more cases and then failed through all three. So the recovery window is longer than two and a half minutes and shorter than twenty, and the error does not say which of the three published limits is responsible.
 
-The engine now treats `429` as transient and waits it out — twenty seconds, then forty-five, then ninety — and the evaluation runner defaults to one request at a time. A refusal that survives all three backoffs is taken as the daily limit, which no amount of waiting inside a single run will clear.
+The waits are now sized to the observed recovery rather than to a theory about the mechanism: one minute, five, then fifteen. Two confident explanations have already needed revision here, so this is recorded as a measurement, not a diagnosis.
+
+Quota is per-model: while `3.6-flash` was refusing, `3.5-flash` answered in the same second. That is a way to go faster at the cost of comparing results across models.
 
 Exa was never the constraint. Each traced case searches four queries and receives fourteen to twenty sources, so eleven traced cases spent roughly forty-four of twenty thousand monthly requests.
 
