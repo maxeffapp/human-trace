@@ -34,6 +34,16 @@ Each phase ends with a committed artifact and measurable exit criteria.
 - [x] Return `no trace` when the attribution would be forced or weak
 - [ ] Add claim-level support checks rather than contributor-level URL checks only
 
+### Provider independence
+
+Added after a provider swap exposed the engine's dependence on one vendor's citation format. Measurements in [`docs/providers.md`](docs/providers.md).
+
+- [x] Run the web search independently of the model provider, so verification never depends on a vendor's citation shape
+- [x] Add a second provider without forking the engine — Gemini plus Exa alongside the original OpenAI path, selected from the keys present
+- [x] Stop before searching when no trace is warranted, so restraint costs less than speaking
+- [x] Keep a provider's SDK out of the code path that does not use it
+- [x] Verify end to end on a free tier: an arbitrary question produces a source-supported trace, and a practical question produces none
+
 ### Reference interface
 
 - [x] Build the editorial answer surface
@@ -50,7 +60,7 @@ Each phase ends with a committed artifact and measurable exit criteria.
 - [x] Validate and normalize the model response at the provider boundary
 - [x] Add schema normalization tests
 - [ ] Add integration tests with recorded provider responses
-- [ ] Add retry, timeout and rate-limit behavior
+- [ ] Add retry, timeout and rate-limit behavior — *retry with backoff on 5xx is in place; timeout and rate-limit handling are not*
 - [ ] Add source-domain quality rules and disputed-claim handling
 
 **Exit criteria:** an arbitrary question can produce a complete answer and, when justified, a source-supported trace in both interface modes. The application builds and its core interactions pass. The remaining claim-level verification work is explicit rather than hidden.
