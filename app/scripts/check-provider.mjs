@@ -25,31 +25,54 @@ console.log(`key       ${apiKey.slice(0, 7)}…${apiKey.slice(-4)}\n`);
 
 const client = new OpenAI({ apiKey, baseURL });
 
-let response;
-try {
-  response = await client.responses.create({
-    model,
-    reasoning: { effort: "low" },
-    tools: [{ type: "web_search", search_context_size: "medium" }],
-    tool_choice: "auto",
-    include: ["web_search_call.action.sources"],
-    input: [
-      {
-        role: "user",
-        content:
-          "Search the web and name two sources describing who first described the magnetic compass. Cite them.",
-      },
-    ],
-  });
-} catch (error) {
-  console.error("REQUEST FAILED\n");
-  console.error(`  ${error.status ?? ""} ${error.message}`);
+const input = [
+  {
+    role: "user",
+    content: "Search the web for one page about the magnetic compass. Reply with just its URL.",
+  },
+];
+
+const request = {
+  model,
+  tools: [{ type: "web_search", search_context_size: "medium" }],
+  tool_choice: "auto",
+  max_output_tokens: 600,
+  input,
+};
+
+async function attempt(body, label) {
+  try {
+    return { response: await client.responses.create(body), label };
+  } catch (error) {
+    return { error, label };
+  }
+}
+
+// `include` is an OpenAI Responses feature. Gateways may reject it, so fall back
+// without it rather than reporting a total failure — the response can still carry
+// citations as annotations.
+let { response, error, label } = await attempt(
+  { ...request, include: ["web_search_call.action.sources"] },
+  "with include",
+);
+
+if (error?.status === 400) {
+  console.log("note: provider rejected include:[web_search_call.action.sources] — retrying without it\n");
+  ({ response, error, label } = await attempt(request, "without include"));
+}
+
+if (error) {
+  console.error(`REQUEST FAILED (${label})\n`);
+  console.error(`  ${error.status ?? ""} ${error.error?.message ?? error.message}`);
   console.error("\nCommon causes:");
   console.error("  401  the key does not belong to the base URL it was sent to");
+  console.error("  402  the account has no credit; nothing here works until it does");
   console.error("  404  this provider does not expose /v1/responses");
-  console.error("  400  this provider does not accept the hosted web_search tool or the include field");
+  console.error("  400  this provider does not accept the hosted web_search tool");
   process.exit(1);
 }
+
+console.log(`request accepted: ${label}\n`);
 
 const itemTypes = (response.output ?? []).map((item) => item.type);
 console.log(`output item types: ${itemTypes.join(", ") || "(none)"}`);
@@ -82,6 +105,10 @@ if (collected.size > 0) {
   console.log("\nVERDICT: NOT compatible as-is.");
   console.log("The model may have searched, but no source URL reached the verifier.");
   console.log("Every contributor would be filtered out and the app would always return 'no trace'.");
-  console.log("An adapter in collectSearchSources() is needed for this provider's citation shape.");
+  const searched = (response.output ?? []).some((i) => i.type === "web_search_call");
+  if (searched) {
+    console.log("A web_search_call was returned, so the search ran — the citations are what is missing.");
+  }
+  console.log("Either use a provider that returns sources, or adapt collectSearchSources() to this one's shape.");
   process.exitCode = 2;
 }

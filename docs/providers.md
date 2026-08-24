@@ -28,19 +28,34 @@ The default. `new OpenAI({ apiKey })` with no `baseURL`. The hosted `web_search`
 
 ## OpenRouter
 
-Set `OPENAI_BASE_URL=https://openrouter.ai/api/v1` and use an OpenRouter model slug in `OPENAI_MODEL`.
+**Measured on 21 August 2026 against `openai/gpt-5.5` via `https://openrouter.ai/api/v1`. Not usable for this project as the engine stands.**
 
-Two known differences, both unverified against a live key at the time of writing:
+What works:
 
-**Web search is requested differently.** OpenRouter exposes search through a `web` plugin, an `:online` model suffix, or an `openrouter:web_search` server tool — not through OpenAI's `tools: [{type: "web_search"}]`.
+| | |
+|---|---|
+| Authentication | accepted |
+| `POST /v1/responses` | exists |
+| `reasoning: { effort }` | accepted |
+| `tools: [{ type: "web_search" }]` | accepted — a `web_search_call` item comes back, so the search really runs |
+| `text.format` with `json_schema` | accepted |
 
-**Citations are shaped differently.** OpenRouter standardises search results as annotations with a nested object:
+What does not:
 
-```json
-{ "type": "url_citation", "url_citation": { "url": "…", "title": "…" } }
-```
+| | |
+|---|---|
+| `include: ["web_search_call.action.sources"]` | rejected, `400 invalid_prompt` |
+| `web_search_call.action` contents | only `type` and `query`; no `sources` |
+| `url_citation` annotations | zero returned, with the plain tool and with the `:online` model suffix |
+| `collectSearchSources()` | **0 sources** |
 
-The collector reads `annotation.url`, not `annotation.url_citation.url`. If OpenRouter's Responses endpoint returns the nested form, source matching yields nothing and the app returns `no trace` for every question.
+The search executes and the answer is produced, but no source URL reaches the verifier. Every contributor would be filtered out and `traceStatus` would be `none` for every question — with no error anywhere. This is the exact silent failure described above, observed rather than predicted.
+
+OpenRouter's documented citation path is its `web` plugin on the **Chat Completions** endpoint, which returns nested `url_citation` annotations. Reaching it would mean moving the engine off `responses.parse()` and off the structured-output helper. That is a large change to avoid, given the engine already targets a provider that returns what the verifier needs.
+
+**Recommendation: use OpenAI directly.** Leave `OPENAI_BASE_URL` unset.
+
+Note also that credits are consumed per request, and the hosted search is billed on top of tokens. An account with a near-zero balance fails with `402` and a message naming the affordable token count, which is easy to mistake for a request-shape problem.
 
 ## Before trusting a provider
 
