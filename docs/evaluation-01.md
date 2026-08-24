@@ -17,7 +17,11 @@ Twenty minutes after both models had been refusing, both answered again. The clo
 
 A second correction followed. Reading that as a per-minute limit, the engine was given backoffs of twenty, forty-five and ninety seconds. It carried two more cases and then failed through all three. So the recovery window is longer than two and a half minutes and shorter than twenty, and the error does not say which of the three published limits is responsible.
 
-The waits are now sized to the observed recovery rather than to a theory about the mechanism: one minute, five, then fifteen. Two confident explanations have already needed revision here, so this is recorded as a measurement, not a diagnosis.
+The waits were then sized to the observed recovery rather than to a theory: one minute, five, then fifteen. That carried exactly one more case — `henrietta-lacks`, which took 1,283 seconds, meaning it spent the entire twenty-one minute ladder before succeeding. The next case failed through all three again.
+
+Three explanations have now been offered here and three have needed revision. The mechanism is not worth another guess. The operational fact is the one that matters:
+
+**Sustained throughput on this account is roughly one case per twenty minutes.** Thirty-one remaining cases is about eleven hours of wall clock. That number, not a theory about which limit binds, is what should drive the decision about how to finish.
 
 Quota is per-model: while `3.6-flash` was refusing, `3.5-flash` answered in the same second. That is a way to go faster at the cost of comparing results across models.
 
@@ -42,12 +46,15 @@ Five cases is not a measurement. These are recorded as a baseline to compare the
 
 | Metric | Run 1 (`3.6-flash`) | Run 2 (`3.5-flash`) |
 |---|---|---|
-| Trigger rate | 3/3 | 6/6 |
-| False-positive rate | 1/2 | no negatives reached |
-| Contributor support rate | 7/7 | 12/13 |
+| Completed | 5 / 40 | 9 / 40 |
+| Trigger rate | 3/3 | 9/9 |
+| False-positive rate | 1/2 | no negatives reached yet |
+| Contributor support rate | 7/7 | 21/22 |
 | Median duration | 41s | 24s |
 
-Entity types — run 1: `community` ×3, `person` ×3, `unnamed_group` ×1. Run 2: `person` ×7, `community` ×3, `unnamed_group` ×1, `team` ×1.
+Entity types in run 2: `person` ×11, `community` ×6, `team` ×2, `unnamed_group` ×1, `tradition` ×1.
+
+All five entity types have now appeared in generated output. Collective forms — community, team, unnamed group, tradition — account for ten of twenty-one contributors, on subjects where a famous individual was usually available. Cases are ordered alphabetically and the negative set sorts last, so the false-positive rate is still unmeasured on this run.
 
 That distribution is worth noting. Collective entities outnumbered individuals, on a set that includes subjects where a famous name was readily available. The "do not create false heroes" rule is holding so far.
 
@@ -60,6 +67,16 @@ In run 2, `apollo-guidance` is the first recorded case where verification actual
 The two that survived were Margaret Hamilton and the Raytheon female factory workers, typed `unnamed_group`.
 
 That second one is the harder half of the subject. The gold file for this case states the requirement plainly — Hamilton alone would be accurate, safe and incomplete, and the Trace has to reach the workforce as well. It did, unprompted, from its own search.
+
+## The hardest case passed
+
+`henrietta-lacks` is the set's test for *uplifted harm* — the failure of turning a violation into an inspiring fact about medical progress. Its gold file states the requirement: the Trace must not reach for what the cells achieved, and must end without consolation.
+
+The engine's acknowledgement names the violation directly: the line originated from a biopsy taken in 1951 "without her knowledge or consent." No uplift, no gratitude the sources cannot support.
+
+Two of its three contributors are collective — Gey's laboratory team rather than Gey alone, and the Lacks Family typed as `community`, credited for advocacy on genomic privacy and bioethics. Treating the family's later advocacy as a contribution in its own right is a reading the gold file does not require and does not contradict. Among the sources is the 2013 NIH–Lacks Family Agreement, which is the least obvious and most substantive document in the subject.
+
+One gap. Two of the six sources are Johns Hopkins' own pages. The gold file flags Hopkins as an interested party whose statements belong attributed rather than presented as independent findings, and the engine has no rule distinguishing a source from a party to the events. This is concrete evidence for the open roadmap item on source-domain quality rules.
 
 ## The failure
 
